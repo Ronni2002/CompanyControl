@@ -1,0 +1,81 @@
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Control de clientes de {{companies.name}}</span>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+        Create Clients
+      </button>
+  
+    </div>
+  </nav>
+  <div class="cards-container">
+    <div class="card" style="width: 18rem" *ngFor="let customer of companies.customers">
+      <img src="../../../assets/img/book.webp" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">{{ customer.name }} {{customer.lastName}}</h5>
+        <p class="card-text">
+          {{customer.age}}
+        </p>
+        <div class="buttons">
+            <button (click)="getCustomerById(customer.id)" data-bs-toggle="modal" data-bs-target="#detailsModal" mat-raised-button color="primary">
+                <mat-icon>info</mat-icon>
+            </button>
+            <button href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">Edit</button>
+            <button href="#" class="btn btn-primary" (click)="deleteCustomer(customer.id)">Delete</button>
+        </div>
+      </div>
+
+<div class="modal modal-create fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create Company</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formCreate">
+          <input formControlName="name" type="text" placeholder="Name Customer" />
+          <input formControlName="lastName" type="text" placeholder="Lat Name Customer" />
+          <input formControlName="age" type="number" placeholder="Age Customer" />
+          <button (click)="addNewAddress()"  matTooltip="Add Adress" mat-mini-fab color="primary" aria-label="Example icon button with a delete icon">
+            <mat-icon>add</mat-icon>
+          </button>
+          <label for="">Add Adresses</label>
+          <div formArrayName="addresses">
+              <div *ngFor="let adress of addresses?.controls; index as i" [formGroupName]="i">
+                  <input formControlName="adress" type="text" placeholder="New Address">
+                  <span *ngIf="addresses.controls.length > 1" (click)="removeNewAddress(i)">Eliminar</span>
+              </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="createCompany()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-detail fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h1>{{costumer.name}}</h1>
+        <img src="../../../assets/img/book.webp" class="card-img-top" alt="..." />
+        <p class="description">{{costumer.name}} {{costumer.lastName}}</p>
+        <div class="page-count">
+          <h3>Cantidad de direcciones: </h3>
+          <p>{{costumer.addresses.length}}</p>
+        </div>
+        <div class="publish-date">
+          <h3>Edad: </h3>
+          <p>{{costumer.age}}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

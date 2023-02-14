@@ -1,0 +1,49 @@
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Companies Control</span>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+        Create Contact
+      </button>
+  
+    </div>
+  </nav>
+  <div class="cards-container">
+    <div class="card" style="width: 18rem" *ngFor="let company of companies">
+      <img src="../../../assets/img/book.webp" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">{{ company.name }}</h5>
+        <p class="card-text">
+          {{company.shortName}}
+        </p>
+        <div class="buttons">
+            <button [routerLink]="['/company', company.id]" mat-raised-button color="primary">
+                <mat-icon>info</mat-icon>
+            </button>
+            <button href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">Edit</button>
+            <button href="#" class="btn btn-primary" (click)="deleteCompany(company.id)">Delete</button>
+        </div>
+      </div>
+
+      <!-- Modal create -->
+<div class="modal modal-create fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create Company</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formCreate">
+          <input formControlName="name" type="text" placeholder="Name Company" />
+          <input formControlName="shortName" type="text" placeholder="Short Name Company" />
+          <input formControlName="rnc" type="number" placeholder="RNC Company" />
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="createCompany()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
